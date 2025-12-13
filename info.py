@@ -51,10 +51,10 @@ MULTIPLE_DB = is_enabled(os.environ.get('MULTIPLE_DB', "False"), True) # Type Tr
 DATABASE_URI2 = environ.get('DATABASE_URI2', "")
 DB_CHANGE_LIMIT = int(environ.get('DB_CHANGE_LIMIT', "432")) 
 
-GRP_LNK = environ.get('GRP_LNK', 'https://t.me/SilentXBotz')
-CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/SilentXBotz')
-OWNER_LNK = environ.get('OWNER_LNK', 'https://t.me/SilentXBotz')
-UPDATE_CHANNEL_LNK = environ.get('UPDATE_CHANNEL_LNK', 'https://t.me/SilentXBotz')
+GRP_LNK = environ.get('GRP_LNK', 'https://t.me/g7guhuhinin')
+CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/Graduate_Movies')
+OWNER_LNK = environ.get('OWNER_LNK', 'https://t.me/Yours_Swapno')
+UPDATE_CHANNEL_LNK = environ.get('UPDATE_CHANNEL_LNK', 'https://t.me/Graduate_Movies')
 
 AUTH_CHANNEL = environ.get("AUTH_CHANNEL", "-1002612579654") # add multiple channels here, separated by single space
 AUTH_REQ_CHANNEL = environ.get('AUTH_REQ_CHANNEL', '-1002743050170')
