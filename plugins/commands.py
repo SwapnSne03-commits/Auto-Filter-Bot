@@ -9,7 +9,7 @@ import pytz
 from logging_helper import LOGGER
 from .pm_filter import auto_filter 
 from Script import script
-from datetime import datetime
+from datetime import datetime, timedelta
 from database.refer import referdb
 from database.topdb import silentdb
 from pyrogram.enums import ParseMode, ChatType
@@ -149,22 +149,22 @@ async def start(client, message):
         if fromuse == 100:
             referdb.add_refer_points(user_id, 0) 
             await message.reply_text(f"🎉 𝗖𝗼𝗻𝗴𝗿𝗮𝘁𝘂𝗹𝗮𝘁𝗶𝗼𝗻𝘀! 𝗬𝗼𝘂 𝘄𝗼𝗻 𝟭𝟬 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗽𝗼𝗶𝗻𝘁 𝗯𝗲𝗰𝗮𝘂𝘀𝗲 𝗬𝗼𝘂 𝗵𝗮𝘃𝗲 𝗯𝗲𝗲𝗻 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗜𝗻𝘃𝗶𝘁𝗲𝗱 ☞ {uss.mention}!")		    
-            await message.reply_text(user_id, f"You have been successfully invited by {message.from_user.mention}!") 	
+            await client.send_message(chat_id=user_id, text=f"You have been successfully invited by {message.from_user.mention}!") 	
             seconds = 2592000
             if seconds > 0:
-                expiry_time = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
+                expiry_time = datetime.now() + timedelta(seconds=seconds)
                 user_data = {"id": user_id, "expiry_time": expiry_time}
                 await db.update_user(user_data)		    
                 await client.send_message(
-                chat_id=user_id,
-                text=f"<b>Hᴇʏ {uss.mention}\n\nYᴏᴜ ɢᴏᴛ 1 ᴍᴏɴᴛʜ ᴘʀᴇᴍɪᴜᴍ sᴜʙsᴄʀɪᴘᴛɪᴏɴ ʙʏ ɪɴᴠɪᴛɪɴɢ 10 ᴜsᴇʀs ❗", disable_web_page_preview=True              
+                    chat_id=user_id,
+                    text=f"<b>Hᴇʏ {uss.mention}\n\nYᴏᴜ ɢᴏᴛ 1 ᴍᴏɴᴛʜ ᴘʀᴇᴍɪᴜᴍ sᴜʙsᴄʀɪᴘᴛɪᴏɴ ʙʏ ɪɴᴠɪᴛɪɴɢ 10 ᴜsᴇʀs ❗", disable_web_page_preview=True              
                 )
             for admin in ADMINS:
                 await client.send_message(chat_id=admin, text=f"Sᴜᴄᴄᴇss ғᴜʟʟʏ ᴛᴀsᴋ ᴄᴏᴍᴘʟᴇᴛᴇᴅ ʙʏ ᴛʜɪs ᴜsᴇʀ:\n\nuser Nᴀᴍᴇ: {uss.mention}\n\nUsᴇʀ ɪᴅ: {uss.id}!")	
         else:
             referdb.add_refer_points(user_id, fromuse)
             await message.reply_text(f"You have been successfully invited by {uss.mention}!")
-            await client.send_message(user_id, f"𝗖𝗼𝗻𝗴𝗿𝗮𝘁𝘂𝗹𝗮𝘁𝗶𝗼𝗻𝘀! 𝗬𝗼𝘂 𝘄𝗼𝗻 𝟭𝟬 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗽𝗼𝗶𝗻𝘁 𝗯𝗲𝗰𝗮𝘂𝘀𝗲 𝗬𝗼𝘂 𝗵𝗮𝘃𝗲 𝗯𝗲𝗲𝗻 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗜𝗻𝘃𝗶𝘁𝗲𝗱 ☞{message.from_user.mention}!")
+            await client.send_message(chat_id=user_id, text=f"𝗖𝗼𝗻𝗴𝗿𝗮𝘁𝘂𝗹𝗮𝘁𝗶𝗼𝗻𝘀! 𝗬𝗼𝘂 𝘄𝗼𝗻 𝟭𝟬 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗽𝗼𝗶𝗻𝘁 𝗯𝗲𝗰𝗮𝘂𝘀𝗲 𝗬𝗼𝘂 𝗵𝗮𝘃𝗲 𝗯𝗲𝗲𝗻 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗜𝗻𝘃𝗶𝘁𝗲𝗱 ☞{message.from_user.mention}!")
         return
         
         
@@ -1150,10 +1150,16 @@ async def menu_callback_handler(client, query):
             [InlineKeyboardButton("📖 Read Me", callback_data="help_readme")],
             [InlineKeyboardButton("🔙 Back", callback_data="home")]
         ]
-        await query.edit_message_caption(
-            caption="🆘 Help Menu",
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
+        try:
+            await query.edit_message_caption(
+                caption="🆘 Help Menu",
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
+        except:
+            await query.edit_message_text(
+                text="🆘 Help Menu",
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
 
     elif data == "help_rules":
         await query.answer(script.HELP_TXT, show_alert=True)
@@ -1212,16 +1218,28 @@ async def menu_callback_handler(client, query):
             ],
             [InlineKeyboardButton("❌ Close Me", callback_data="close")]
         ]
-        await query.edit_message_caption(
-            caption=script.START_TXT.format(
-                query.from_user.mention,
-                temp.U_NAME,
-                temp.B_NAME
-            ),
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=enums.ParseMode.HTML
-        )
+        try:
+            await query.edit_message_caption(
+                caption=script.START_TXT.format(
+                    query.from_user.mention,
+                    temp.U_NAME,
+                    temp.B_NAME
+                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=enums.ParseMode.HTML
+            )
+        except:
+            await query.edit_message_text(
+                text=script.START_TXT.format(
+                    query.from_user.mention,
+                    temp.U_NAME,
+                    temp.B_NAME
+                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=enums.ParseMode.HTML
+            )
 
     # -------- CLOSE --------
     elif data == "close":
+        await query.answer()
         await query.message.delete()
