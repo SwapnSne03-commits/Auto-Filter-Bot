@@ -93,39 +93,39 @@ async def start(client, message):
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
-    if len(message.command) != 2:
-    buttons = [
-        [
-            InlineKeyboardButton(
-                "➕ Add Me To Ur Grp",
-                url=f"https://t.me/{temp.U_NAME}?startgroup=true"
-            )
-        ],
-        [
-            InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)
-        ],
-        [
-            InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
-            InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
-        ],
-        [
-            InlineKeyboardButton("❌ Close Me", callback_data="close")
+    if len(message.command) == 1:
+        buttons = [
+            [
+                InlineKeyboardButton(
+                    "➕ Add Me To Ur Grp",
+                    url=f"https://t.me/{temp.U_NAME}?startgroup=true"
+                )
+            ],
+            [
+                InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)
+            ],
+            [
+                InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
+                InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
+            ],
+            [
+                InlineKeyboardButton("❌ Close Me", callback_data="close")
+            ]
         ]
-    ]
 
-    await message.reply_photo(
-        photo=random.choice(PICS),
-        caption=script.START_TXT.format(
-            message.from_user.mention,
-            temp.U_NAME,
-            temp.B_NAME
-        ),
-        reply_markup=InlineKeyboardMarkup(buttons),
-        parse_mode=enums.ParseMode.HTML
-    )
-    return
+        await message.reply_photo(
+            photo=random.choice(PICS),
+            caption=script.START_TXT.format(
+                message.from_user.mention,
+                temp.U_NAME,
+                temp.B_NAME
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=enums.ParseMode.HTML
+        )
+        return
         
-    if message.command[1].startswith("reff_"):
+    if len(message.command) == 2 and message.command[1].startswith("reff_"):
         try:
             user_id = int(message.command[1].split("_")[1])
         except ValueError:
