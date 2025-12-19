@@ -94,25 +94,36 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
-        buttons = [[
-                    InlineKeyboardButton('+ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ +', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
-                ],[
-                    InlineKeyboardButton('🧧 ᴛʀᴇɴᴅɪɴɢ', callback_data="topsearch"),
-                    InlineKeyboardButton('🎟️ ᴜᴘɢʀᴀᴅᴇ', callback_data="premium"),
-                ],[
-                    InlineKeyboardButton('♻️ ᴅᴍᴄᴀ', callback_data='disclaimer'),
-                    InlineKeyboardButton('👤 ᴀʙᴏᴜᴛ', callback_data='me')
-                ],[
-                    InlineKeyboardButton('🚫 ᴇᴀʀɴ ᴍᴏɴᴇʏ ᴡɪᴛʜ ʙᴏᴛ 🚫', callback_data="earn")
-                ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply_photo(
-            photo=random.choice(PICS),
-            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML,
-        )
-        return
+    buttons = [
+        [
+            InlineKeyboardButton(
+                "➕ Add Me To Ur Grp",
+                url=f"https://t.me/{temp.U_NAME}?startgroup=true"
+            )
+        ],
+        [
+            InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)
+        ],
+        [
+            InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
+            InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
+        ],
+        [
+            InlineKeyboardButton("❌ Close Me", callback_data="close")
+        ]
+    ]
+
+    await message.reply_photo(
+        photo=random.choice(PICS),
+        caption=script.START_TXT.format(
+            message.from_user.mention,
+            temp.U_NAME,
+            temp.B_NAME
+        ),
+        reply_markup=InlineKeyboardMarkup(buttons),
+        parse_mode=enums.ParseMode.HTML
+    )
+    return
         
     if message.command[1].startswith("reff_"):
         try:
@@ -1126,3 +1137,91 @@ async def drop_groups_command(client, message):
     except Exception as e:
         await message.reply(f"Failed to delete collection: {e}")
         
+@Client.on_callback_query(
+    filters.regex("^(help_menu|help_rules|help_readme|about_menu|owner_info|home|close)$")
+)
+async def menu_callback_handler(client, query):
+    data = query.data
+
+    # -------- HELP MENU --------
+    if data == "help_menu":
+        buttons = [
+            [InlineKeyboardButton("📜 Rules", callback_data="help_rules")],
+            [InlineKeyboardButton("📖 Read Me", callback_data="help_readme")],
+            [InlineKeyboardButton("🔙 Back", callback_data="home")]
+        ]
+        await query.edit_message_caption(
+            caption="🆘 Help Menu",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+    elif data == "help_rules":
+        await query.answer(script.HELP_TXT, show_alert=True)
+
+    elif data == "help_readme":
+        await query.answer(script.DISCLAIMER_TXT, show_alert=True)
+
+    # -------- ABOUT MENU --------
+    elif data == "about_menu":
+        buttons = [
+            [InlineKeyboardButton("🐞 Report Bugs & Feedback", url=SUPPORT_GRP)],
+            [InlineKeyboardButton("📢 Daily Update Channel", url=UPDATE_CHANNEL_LNK)],
+            [InlineKeyboardButton("👤 Owner Info", callback_data="owner_info")],
+            [InlineKeyboardButton("❌ Close", callback_data="close")]
+        ]
+        await query.edit_message_caption(
+            caption="ℹ️ About This Bot",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+    # -------- OWNER INFO --------
+    elif data == "owner_info":
+        owner_text = """<b>
+┏━•❃𓊈𒆜 Oᴡɴᴇʀ Dᴇᴛᴀɪʟꜱ 𒆜𓊉❃•━┓
+
+◈ ᴘᴇʀᴍᴀɴᴇɴᴛ ᴅᴍ ʟɪɴᴋ :
+Ꮪᴡᴀᴘɴᴏɴɪʟ
+
+‿︵‿︵‿︵‿୨❤୧‿︵‿︵‿︵‿
+</b>
+"""
+        await query.message.edit_media(
+            InputMediaPhoto(
+                media=random.choice(PICS),
+                caption=owner_text,
+                parse_mode=enums.ParseMode.HTML
+            ),
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton("🔙 Back", callback_data="about_menu")]]
+            )
+        )
+
+    # -------- HOME --------
+    elif data == "home":
+        buttons = [
+            [
+                InlineKeyboardButton(
+                    "➕ Add Me To Ur Grp",
+                    url=f"https://t.me/{temp.U_NAME}?startgroup=true"
+                )
+            ],
+            [InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)],
+            [
+                InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
+                InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
+            ],
+            [InlineKeyboardButton("❌ Close Me", callback_data="close")]
+        ]
+        await query.edit_message_caption(
+            caption=script.START_TXT.format(
+                query.from_user.mention,
+                temp.U_NAME,
+                temp.B_NAME
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=enums.ParseMode.HTML
+        )
+
+    # -------- CLOSE --------
+    elif data == "close":
+        await query.message.delete()
