@@ -112,14 +112,21 @@ async def start(client, message):
                 InlineKeyboardButton("❌ Close Me", callback_data="close")
             ]
         ]
+        current_time = datetime.now(pytz.timezone(TIMEZONE))
+        curr_time = current_time.hour        
+        if curr_time < 12:
+            gtxt = "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 🌞" 
+        elif curr_time < 17:
+            gtxt = "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ 🌓" 
+        elif curr_time < 21:
+            gtxt = "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ 🌘"
+        else:
+            gtxt = "ɢᴏᴏᴅ ɴɪɢʜᴛ 🌑"
 
         await message.reply_photo(
             photo=random.choice(PICS),
-            caption=script.START_TXT.format(
-                message.from_user.mention,
-                temp.U_NAME,
-                temp.B_NAME
-            ),
+            caption=script.START_TXT.format(user=message.from_user.mention, greet=gtxt),
+                
             reply_markup=InlineKeyboardMarkup(buttons),
             parse_mode=enums.ParseMode.HTML
         )
