@@ -700,6 +700,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "start":
         await query.answer()
+        buttons = get_main_buttons()
 
         current_time = datetime.now(pytz.timezone(TIMEZONE))
         hour = current_time.hour
