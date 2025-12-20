@@ -1254,13 +1254,46 @@ async def menu_callback_handler(client, query):
         )
 
     # -------- HOME --------
+    
+# -------- HOME --------
     elif data == "home":
         await query.answer()
-        await query.message.delete()
-        await client.send_message(
-            chat_id=query.from_user.id,
-            text="/start"
-        )
+
+        current_time = datetime.now(pytz.timezone(TIMEZONE))
+        hour = current_time.hour
+
+        if hour < 12:
+            gtxt = "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ"
+        elif hour < 17:
+            gtxt = "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ"
+        elif hour < 21:
+            gtxt = "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ"
+        else:
+            gtxt = "ɢᴏᴏᴅ ɴɪɢʜᴛ"
+
+        try:
+            await query.edit_message_media(
+                InputMediaPhoto(
+                    media=random.choice(PICS),
+                    caption=script.START_TXT.format(
+                        user=query.from_user.mention,
+                        greet=gtxt
+                    ),
+                    parse_mode=enums.ParseMode.HTML
+                )
+            )
+            await query.edit_message_reply_markup(
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
+        except Exception:
+            await query.edit_message_text(
+                text=script.START_TXT.format(
+                    user=query.from_user.mention,
+                    greet=gtxt
+                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=enums.ParseMode.HTML
+            )
 
     # -------- CLOSE --------
     elif data == "close":
