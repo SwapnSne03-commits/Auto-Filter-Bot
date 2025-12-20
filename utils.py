@@ -52,6 +52,26 @@ class temp(object):
     IMDB_CAP = {}
     VERIFICATIONS = {}
 
+def get_main_buttons():
+    return [
+        [
+            InlineKeyboardButton(
+                "➕ Add Me To Ur Grp",
+                url=f"https://t.me/{temp.U_NAME}?startgroup=true"
+            )
+        ],
+        [
+            InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)
+        ],
+        [
+            InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
+            InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
+        ],
+        [
+            InlineKeyboardButton("❌ Close Me", callback_data="close")
+        ]
+    ]
+
     
 async def is_check_admin(bot, chat_id, user_id):
     try:
