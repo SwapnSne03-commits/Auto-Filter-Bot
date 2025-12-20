@@ -1146,8 +1146,10 @@ async def menu_callback_handler(client, query):
     # -------- HELP MENU --------
     if data == "help_menu":
         buttons = [
-            [InlineKeyboardButton("📜 Rules", callback_data="help_rules")],
-            [InlineKeyboardButton("📖 Read Me", callback_data="help_readme")],
+            [
+                InlineKeyboardButton("📜 Rules", callback_data="help_rules"),
+                InlineKeyboardButton("📖 Read Me", callback_data="help_readme")
+            ],
             [InlineKeyboardButton("🔙 Back", callback_data="home")]
         ]
         try:
@@ -1203,28 +1205,33 @@ async def menu_callback_handler(client, query):
         buttons = [
             [InlineKeyboardButton("🐞 Report Bugs & Feedback", url=SUPPORT_GRP)],
             [InlineKeyboardButton("📢 Daily Update Channel", url=UPDATE_CHANNEL_LNK)],
-            [InlineKeyboardButton("👤 Owner Info", callback_data="owner_info")],
-            [InlineKeyboardButton("❌ Close", callback_data="close")]
+            [
+                InlineKeyboardButton("👤 Owner Info", callback_data="owner_info"),
+                InlineKeyboardButton("❌ Close", callback_data="close")
+            ],[
+                InlineKeyboardButton("🏠 Home", callback_data="home")
+            ]
         ]
         try:
             await query.edit_message_caption(
-                caption="ℹ️ About This Bot",
+                caption=script.ABOUT_TXT.format(temp.B_NAME, temp.B_NAME, OWNER_LNK),
                 reply_markup=InlineKeyboardMarkup(buttons)
             )
         except:
             await query.edit_message_text(
-                text="ℹ️ About This Bot",
+                text=script.ABOUT_TXT.format(temp.B_NAME, temp.B_NAME, OWNER_LNK),
                 reply_markup=InlineKeyboardMarkup(buttons)
             )
 
     # -------- OWNER INFO --------
     elif data == "owner_info":
+        await query.answer()
         owner_text = """<b>
 ┏━•❃𓊈𒆜 Oᴡɴᴇʀ Dᴇᴛᴀɪʟꜱ 𒆜𓊉❃•━┓
-
-◈ ᴘᴇʀᴍᴀɴᴇɴᴛ ᴅᴍ ʟɪɴᴋ :
-Ꮪᴡᴀᴘɴᴏɴɪʟ
-
+◈ ɴᴀɴᴇ : Ꮪᴡᴀᴘɴᴏɴɪʟ
+◈ ʜᴏʙʙʏ : ᴡᴇʙ ʟᴇᴀʀɴɪɴɢ
+◈ ғʀᴏᴍ : ᴋᴏʟᴋᴀᴛᴀ
+◈ ᴘᴇʀᴍᴀɴᴇɴᴛ ᴅᴍ ʟɪɴᴋ : <a href="https://t.me/Yours_Swap_bot">ʜᴇʀᴇ ɪ ᴀᴍ</a>
 ‿︵‿︵‿︵‿୨❤୧‿︵‿︵‿︵‿
 </b>
 """
