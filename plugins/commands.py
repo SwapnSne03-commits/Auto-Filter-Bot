@@ -94,24 +94,7 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) == 1:
-        buttons = [
-            [
-                InlineKeyboardButton(
-                    "➕ Add Me To Ur Grp",
-                    url=f"https://t.me/{temp.U_NAME}?startgroup=true"
-                )
-            ],
-            [
-                InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)
-            ],
-            [
-                InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
-                InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
-            ],
-            [
-                InlineKeyboardButton("❌ Close Me", callback_data="close")
-            ]
-        ]
+        buttons = get_main_buttons()
         current_time = datetime.now(pytz.timezone(TIMEZONE))
         curr_time = current_time.hour        
         if curr_time < 12:
@@ -1258,6 +1241,7 @@ async def menu_callback_handler(client, query):
 # -------- HOME --------
     elif data == "home":
         await query.answer()
+        buttons = get_main_buttons()
 
         current_time = datetime.now(pytz.timezone(TIMEZONE))
         hour = current_time.hour
