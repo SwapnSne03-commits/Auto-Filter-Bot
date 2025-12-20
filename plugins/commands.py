@@ -1255,40 +1255,12 @@ async def menu_callback_handler(client, query):
 
     # -------- HOME --------
     elif data == "home":
-        buttons = [
-            [
-                InlineKeyboardButton(
-                    "➕ Add Me To Ur Grp",
-                    url=f"https://t.me/{temp.U_NAME}?startgroup=true"
-                )
-            ],
-            [InlineKeyboardButton("📩 Main Request Grp", url=GRP_LNK)],
-            [
-                InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
-                InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
-            ],
-            [InlineKeyboardButton("❌ Close Me", callback_data="close")]
-        ]
-        try:
-            await query.edit_message_caption(
-                caption=script.START_TXT.format(
-                    query.from_user.mention,
-                    temp.U_NAME,
-                    temp.B_NAME
-                ),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=enums.ParseMode.HTML
-            )
-        except:
-            await query.edit_message_text(
-                text=script.START_TXT.format(
-                    query.from_user.mention,
-                    temp.U_NAME,
-                    temp.B_NAME
-                ),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=enums.ParseMode.HTML
-            )
+        await query.answer()
+        await query.message.delete()
+        await client.send_message(
+            chat_id=query.from_user.id,
+            text="/start"
+        )
 
     # -------- CLOSE --------
     elif data == "close":
