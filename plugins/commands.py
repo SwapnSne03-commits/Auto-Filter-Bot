@@ -1162,9 +1162,25 @@ async def menu_callback_handler(client, query):
             )
 
     elif data == "help_rules":
-        await query.answer(script.HELP_TXT, show_alert=True)
+        await query.answer()
+        buttons = [
+            [InlineKeyboardButton("🔙 Back", callback_data="help_menu")]
+        ]
+        try:
+            await query.edit_message_caption(
+                caption=script.HELP_TXT,
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=enums.ParseMode.HTML
+            )
+        except:
+            await query.edit_message_text(
+                text=script.HELP_TXT,
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=enums.ParseMode.HTML
+            )
 
     elif data == "help_readme":
+        await query.answer()
         buttons = [
             [InlineKeyboardButton("🔙 Back", callback_data="help_menu")]
         ]
@@ -1175,25 +1191,31 @@ async def menu_callback_handler(client, query):
                     parse_mode=enums.ParseMode.HTML
             )
         except:
-        await query.edit_message_text(
-            text=script.DISCLAIMER_TXT,
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=enums.ParseMode.HTML
-        )
-        await query.answer(script.DISCLAIMER_TXT, show_alert=True)
+            await query.edit_message_text(
+                text=script.DISCLAIMER_TXT,
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=enums.ParseMode.HTML
+            )
 
     # -------- ABOUT MENU --------
     elif data == "about_menu":
+        await query.answer()
         buttons = [
             [InlineKeyboardButton("🐞 Report Bugs & Feedback", url=SUPPORT_GRP)],
             [InlineKeyboardButton("📢 Daily Update Channel", url=UPDATE_CHANNEL_LNK)],
             [InlineKeyboardButton("👤 Owner Info", callback_data="owner_info")],
             [InlineKeyboardButton("❌ Close", callback_data="close")]
         ]
-        await query.edit_message_caption(
-            caption="ℹ️ About This Bot",
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
+        try:
+            await query.edit_message_caption(
+                caption="ℹ️ About This Bot",
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
+        except:
+            await query.edit_message_text(
+                text="ℹ️ About This Bot",
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
 
     # -------- OWNER INFO --------
     elif data == "owner_info":
