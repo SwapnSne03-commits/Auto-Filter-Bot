@@ -1165,6 +1165,21 @@ async def menu_callback_handler(client, query):
         await query.answer(script.HELP_TXT, show_alert=True)
 
     elif data == "help_readme":
+        buttons = [
+            [InlineKeyboardButton("🔙 Back", callback_data="help_menu")]
+        ]
+        try:
+            await query.edit_message_caption(
+                    caption=script.DISCLAIMER_TXT,
+                    reply_markup=InlineKeyboardMarkup(buttons),
+                    parse_mode=enums.ParseMode.HTML
+            )
+        except:
+        await query.edit_message_text(
+            text=script.DISCLAIMER_TXT,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=enums.ParseMode.HTML
+        )
         await query.answer(script.DISCLAIMER_TXT, show_alert=True)
 
     # -------- ABOUT MENU --------
