@@ -802,14 +802,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
         ]
 
-    await query.message.edit_media(
-        InputMediaPhoto(
-            media=random.choice(PICS),
-            caption=script.BPREMIUM_TXT,
-            parse_mode=enums.ParseMode.HTML
-        ),
-        reply_markup=InlineKeyboardMarkup(buttons)
-    )
+        await query.message.edit_media(
+            InputMediaPhoto(
+                media=random.choice(PICS),
+                caption=script.BPREMIUM_TXT,
+                parse_mode=enums.ParseMode.HTML
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
 
     elif query.data == "bronze":
         await query.answer()
@@ -939,7 +939,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("🔐 Click here to buy premium", callback_data="buy")
             ],
             [
-                InlineKeyboardButton("⋞ Back", callback_data="gold"),
+                InlineKeyboardButton("⋞ Back", callback_data="platinum"),
                 InlineKeyboardButton("4 / 7", callback_data="pagesn1"),
                 InlineKeyboardButton("Next ⋟", callback_data="other")
             ],
