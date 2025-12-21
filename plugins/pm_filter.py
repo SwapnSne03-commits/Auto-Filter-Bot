@@ -982,6 +982,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ),
             reply_markup=InlineKeyboardMarkup(buttons)
 	    )
+    # --- PAGE INDICATORS ---
+    elif query.data == "pagesn1":
+        await query.answer(text=script.PAGE_TXT, show_alert=True)
     elif query.data == "buy":
         try:
             btn = [[ 
