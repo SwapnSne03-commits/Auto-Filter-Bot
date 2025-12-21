@@ -344,6 +344,8 @@ Requested by : {message.from_user.mention}</b>"""
 
 🚀 ꜰᴏʟʟᴏᴡ ᴛʜᴇꜱᴇ ꜱᴛᴇᴘꜱ ꜰᴏʀ ꜰᴀꜱᴛ ʀᴇꜱᴜʟᴛꜱ!
 </b>"""
+
+    PAGE_TXT = """ᴡʜʏ ᴀʀᴇ ʏᴏᴜ ꜱᴏ ᴄᴜʀɪᴏᴜꜱ ⁉️"""
     
     FREE_TXT = """<b>👋 ʜᴇʏ {},
     
