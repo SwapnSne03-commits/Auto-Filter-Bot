@@ -763,7 +763,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('⚜️ ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ɢᴇᴛ ꜰʀᴇᴇ ᴛʀɪᴀʟ', callback_data="give_trial")
         ],[
             InlineKeyboardButton('⋞ ʙᴀᴄᴋ', callback_data='other'),
-            InlineKeyboardButton('6 / 7', callback_data='pagesn1'),
+            InlineKeyboardButton('7 / 7', callback_data='pagesn1'),
             InlineKeyboardButton('ɴᴇxᴛ ⋟', callback_data='bronze')
         ],[
             InlineKeyboardButton('⇋ ʙᴀᴄᴋ ⇋', callback_data='premium')
@@ -873,7 +873,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             [
                 InlineKeyboardButton("⋞ Back", callback_data="silver"),
                 InlineKeyboardButton("3 / 7", callback_data="pagesn1"),
-                InlineKeyboardButton("Next ⋟", callback_data="diamond")
+                InlineKeyboardButton("Next ⋟", callback_data="platinum")
             ],
             [
                 InlineKeyboardButton("⇋ Back ⇋", callback_data="premium")
@@ -905,7 +905,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     callback_data="gold"
                 ),
                 InlineKeyboardButton(
-                    "3 / 7",
+                    "4 / 7",
                     callback_data="pagesn1"
                 ),
                 InlineKeyboardButton(
@@ -940,7 +940,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ],
             [
                 InlineKeyboardButton("⋞ Back", callback_data="platinum"),
-                InlineKeyboardButton("4 / 7", callback_data="pagesn1"),
+                InlineKeyboardButton("5 / 7", callback_data="pagesn1"),
                 InlineKeyboardButton("Next ⋟", callback_data="other")
             ],
             [
@@ -966,7 +966,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ],
             [
                 InlineKeyboardButton("⋞ Back", callback_data="diamond"),
-                InlineKeyboardButton("5 / 7", callback_data="pagesn1"),
+                InlineKeyboardButton("6 / 7", callback_data="pagesn1"),
                 InlineKeyboardButton("Next ⋟", callback_data="free")
             ],
             [
