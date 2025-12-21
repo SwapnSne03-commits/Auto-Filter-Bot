@@ -67,7 +67,7 @@ def get_main_buttons():
             InlineKeyboardButton("🆘 Help", callback_data="help_menu"),
             InlineKeyboardButton("ℹ️ About", callback_data="about_menu")
         ],
-        [
+        [   InlineKeyboardButton("✨ Premium", callback_data="premium"), 
             InlineKeyboardButton("❌ Close Me", callback_data="close")
         ]
     ]
